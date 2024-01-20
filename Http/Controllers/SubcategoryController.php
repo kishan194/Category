@@ -49,8 +49,14 @@ class SubcategoryController extends Controller
          
             $subcategory = DB::table('subcategories')->where('id',$id)->get();
              return view('subcategories/view',['subcategories'=>$subcategory]);
-     
     }
+    // public function showProducts($id)
+    // {
+    //     $subcategory = Subcategory::findOrFail($id);
+    //     $products = $subcategory->products;
+
+    //     return view('subcategories.view', compact('subcategory', 'products'));
+    // }
 
    
 }

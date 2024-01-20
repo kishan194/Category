@@ -52,7 +52,7 @@ class CategoryController extends Controller
         $category = new category();
         $category->name = $request->name;
         $category->image = $imagename;
-        // $category->slug = (str::slug($request->slug));
+        //$category->slug = (str::slug($request->slug));
         $category->save();
         return back()->withSuccess('Category Added.....');
         
