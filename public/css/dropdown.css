@@ -1,0 +1,82 @@
+/* 
+.category-list {
+          list-style: none;
+          padding: 0;
+      }
+      
+      .dropdown-item {
+          display: block;
+          padding: 10px;
+          color: #333;
+          text-decoration: none;
+          transition: background-color 0.3s ease;
+      }
+      
+      .parent-category {
+          background-color: #f1f1f1;
+          font-weight: bold;
+      }
+      
+      .child-category {
+          background-color: #fff;
+          padding-left: 20px;
+      }
+      
+      .dropdown-item:hover {
+          background-color: #ddd;
+      }
+      
+      
+      .dropdown-link {
+          color: #333;
+          text-decoration: none;
+      }
+      
+      .dropdown-link:hover {
+          text-decoration: underline;
+      } */
+      /* dropdown.css */
+
+/* Style for the dropdown container */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Style for the list items in the dropdown */
+.category-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Style for the parent categories in the dropdown */
+.parent-category {
+    position: relative;
+    display: inline-block;
+}
+
+.parent-category:hover .dropdown-content {
+    display: block;
+}
+
+/* Style for the child categories in the dropdown */
+.child-category {
+    padding-left: 20px; /* Adjust as needed for indentation */
+}
+
+/* Style for the links in the dropdown */
+.dropdown-item a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-item a:hover {
+    background-color: #ddd;
+}
