@@ -23,9 +23,7 @@
                 <th>Category_id</th>
                 <th>Subcategory_id</th>
                 <th>Image</th>
-                <th>Image1</th>
-                <th>Image2</th>
-                <th>Image3</th>
+               
                 {{-- <th>Actions</th> --}}
             </tr>
         </thead>
@@ -37,9 +35,6 @@
                     <td>{{ $product->category_id}} </td>
                     <td>{{ $product->subcategory_id}} </td>
                     <td> <img src="{{ asset('products/'.$product->image) }}" alt="{{ $product->name }} "></td>
-                    <td> <img src="{{ asset('products/'.$product->image1) }}" alt="{{ $product->name }} "></td>
-                    <td> <img src="{{ asset('products/'.$product->image2) }}" alt="{{ $product->name }} "></td>
-                    <td> <img src="{{ asset('products/'.$product->image3) }}" alt="{{ $product->name }} "></td>
                     </form>
                 </tr>
              @endforeach

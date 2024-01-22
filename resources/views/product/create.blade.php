@@ -17,6 +17,9 @@
           <div class="alert alert-success" role="alert">
           <strong>{{$message}}</strong>
           </div>
+          {{-- @foreach (\Session::get('image') as $imgs )
+              <img src="image/{{$imgs}}">
+          @endforeach --}}
    @endif
 
     <form action="/product" method="POST" enctype="multipart/form-data">
@@ -46,18 +49,6 @@
          <div class="form-group">
             <label for="image">Product Image:</label>
             <input type="file" name="image">
-        </div>
-        <div class="form-group">
-            <label for="image">Product Image1:</label>
-            <input type="file" name="image1">
-        </div>
-        <div class="form-group">
-            <label for="image">Product Image2:</label>
-            <input type="file" name="image2">
-        </div>
-        <div class="form-group">
-            <label for="image">Product Image3:</label>
-            <input type="file" name="image3">
         </div>
         <button type="submit" cladd="btn btn-success">Create Category</button>
         <a href="{{url('categories')}}" class="btn btn-success">Back</a>
