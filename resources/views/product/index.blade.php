@@ -22,9 +22,6 @@
                 <th>Category_id</th>
                 <th>Subcategory_id</th>
                 <th>Image</th>
-                <th>Image1</th>
-                <th>Image2</th>
-                <th>Image3</th>
                 <th>View</th>
 
                 {{-- <th>Actions</th> --}}
@@ -37,10 +34,25 @@
                     <td>{{ $product->name }} </td>
                     <td>{{$product->category_id}}</td>
                     <td>{{$product->subcategory_id}}</td>
-                    <td><img src="products/{{$product->image}}" class="rounded-circle" width="50" height="50" alt="Example Image"></td>
-                     <td><img src="products/{{$product->image1}}" class="rounded-circle" width="50" height="50" alt="Example Image"></td>
-                      <td><img src="products/{{$product->image2}}" class="rounded-circle" width="50" height="50" alt="Example Image"></td>
-                       <td><img src="products/{{$product->image2}}" class="rounded-circle" width="50" height="50" alt="Example Image"></td>
+                     
+          <td>
+    <div class="image-container">
+        @if (!empty($product->image))
+            @foreach (json_decode($product->image) as $image)
+                @if (file_exists(public_path('products/'.$image)))
+                    <img src="{{ asset('products/'.$image) }}" class="rounded-circle product-image" alt="Example Image">
+                @else
+                    <p>Image not found: {{ $image }}</p>
+                @endif
+            @endforeach
+        @else
+            <p>No images for this product.</p>
+        @endif
+    </div>
+</td>
+
+                   
+                   
                     {{-- <td><a href="{{ route('subcategories.view',$product -> id)}}" class="btn btn-primary">View</a> --}}
                     <td><a href="{{route('product.show',$product -> id)}}" class="btn btn-success">View</a>
                         </form>
