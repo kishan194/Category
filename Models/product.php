@@ -9,7 +9,7 @@ class product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','category_id','subcategory_id'];
+    protected $fillable = ['name','category_id','subcategory_id','image'];
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -19,4 +19,7 @@ class product extends Model
     {
         return $this->belongsTo(Subcategory::class,'subcategory_id');
     }
+    protected $casts = [
+        'images' => 'array',
+    ];
 }

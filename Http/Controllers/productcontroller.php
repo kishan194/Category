@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\product;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class productcontroller extends Controller
 {
@@ -14,27 +16,36 @@ class productcontroller extends Controller
         return view('product.index', compact('products'));
     }
     public function create(){
-        return view('product.create');
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+        return view('product.create',  compact('categories','subcategories'));
     }
     public function store(Request $request){
-        $imagename = time() . '.' .$request->image->extension();
-        $request->image->move(public_path('products'),$imagename);
+        $fileNames = [];
+
+        foreach($request->file('image') as $image){
+            $imageName = $image->getClientOriginalName();
+            // $image->move(public_path().'/products/',$imageName);
+            $image->move(public_path('products'),$imageName);
+            $fileNames[] = $imageName;
+        }
+        
         $product = new product();
         $product->name = $request->name;
-        $product->image = $imagename;
+        
         $product->category_id=$request->category_id;
         $product->subcategory_id=$request->subcategory_id;
+        $product->image = json_encode($fileNames);
         $product->save();
         return back()->withSuccess('product Added');
 
     }
-    // public function showProductsBySubcategory($subcategoryId)
-    // {
-    //     //  dd($subcategoryId);
-    //     // $subcategory = Subcategory::with('products')->find($subcategoryId);
-    //     // $products = $subcategory->product;
+  
+    public function view($id){
 
-    //     // return view('product.view', compact('products'));
-    // }
+                
+               $product = DB::table('products')->where('id',$id)->get();
+                return view('product/view',['products'=>$product]);
+    }
 
 }

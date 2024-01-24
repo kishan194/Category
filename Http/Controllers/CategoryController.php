@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 Use App\Models\Category;
+Use App\Models\Subcategory;
 
 class CategoryController extends Controller
 {
@@ -16,10 +17,10 @@ class CategoryController extends Controller
         return view('categories/index', ['categories' => $categoryTree]);
     }
     public function CategoryTree($categories, $parentId = 0)
-{
-    $categoryTree = [];
+    {
+     $categoryTree = [];
 
-    foreach ($categories as $category) {
+      foreach ($categories as $category) {
         if ($category->category_id == $parentId) {
             $subcategory = $this->CategoryTree($categories, $category->id);
             if ($subcategory) {
@@ -42,17 +43,12 @@ class CategoryController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // if ($request->hasFile('image')) {
-        //     $data['image'] = $request->file('image')->store('category_images', 'public');
-        // }
-        // Category::create($data);
-        // return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+        
         $imagename = time(). '.' .$request->image->extension();
         $request->image->move(public_path('products'),$imagename);
         $category = new category();
         $category->name = $request->name;
         $category->image = $imagename;
-        //$category->slug = (str::slug($request->slug));
         $category->save();
         return back()->withSuccess('Category Added.....');
         
@@ -60,10 +56,21 @@ class CategoryController extends Controller
     public function allCategories()
     {
         $categories = Category::with('subcategories')->get();
-
         return view('categories/allcategories', compact('categories'));
     }
+
     
 
-   
+public function showProducts(Category $category)
+{
+    $category = Category::with('subcategories.products')->find($category->id);
+    return view('categories.showProducts', compact('category'));
 }
+
+    public function showSubcategoryProducts(Subcategory $subcategory)
+    {
+        $products = $subcategory->products;
+        $subcategories = $subcategory->subcategories;
+        return view('subcategories.showProducts', compact('subcategory', 'products', 'subcategories',));
+    }
+    }
