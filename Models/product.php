@@ -9,12 +9,11 @@ class product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','category_id','subcategory_id','image'];
+    protected $fillable = ['name','category_id','subcategory_id','image','price','price'];
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
-
     public function subcategory()
     {
         return $this->belongsTo(Subcategory::class,'subcategory_id');

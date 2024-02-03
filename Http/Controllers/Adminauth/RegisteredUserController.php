@@ -35,14 +35,11 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Admin::class],
             'password' => ['required', 'string', 'min:8'],
         ]);
-
         
         $admin = Admin::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-           
-
         ]);
 
         event(new Registered($admin));
