@@ -28,13 +28,6 @@ class SubcategoryController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        // if ($request->hasFile('image')) {
-        //     $data['image'] = $request->file('image')->store('subcategory_images', 'public');
-        // }
-
-        // Subcategory::create($data);
-
-        // return redirect()->route('subcategories.index')->with('success', 'Subcategory created successfully.');
         $imagename = time(). '.' .$request->image->extension();
         $request->image->move(public_path('products'),$imagename);
         $category = new subcategory();
