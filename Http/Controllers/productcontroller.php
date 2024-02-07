@@ -162,6 +162,5 @@ class productcontroller extends Controller
     {
         session()->put('cart', $cart);
         return back();
-       
     }
 }

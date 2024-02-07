@@ -10,6 +10,7 @@ use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ReviewCartController extends Controller
 {
@@ -70,5 +71,28 @@ class ReviewCartController extends Controller
             return back()->withSuccess('Place Order SuccessFully');
 
         }
-    }
+        public function orderDetail()
+        {  
+            $orders = Order::where('id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+           $orderItems = OrderItem::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+            return view('product.OrderList' , compact('orderItems','orders'));
+        }
+        public function OrderView($order_id){
+            
+            if(OrderItem::where('id',$order_id)->exist())
+            {
+                        return view('product.OrderView');
+            }
+            else{
+                 return redirect()->back()->with('No Order Found');
+            }
+        }
+        
+    } 
 
