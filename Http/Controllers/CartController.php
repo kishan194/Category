@@ -29,7 +29,7 @@ public function updateQuantity(Request $request)
         $cartItems[] = [
             'id' => $productId,
             'quantity' => max(1, $quantity), // Ensure quantity doesn't go below 1
-            // Add other product details here
+            
         ];
     }
 

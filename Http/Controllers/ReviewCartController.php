@@ -64,35 +64,30 @@ class ReviewCartController extends Controller
                     'product_id' => $cartItem['id'],
                     'quantity' => $cartItem['quantity'],
                     'price' => $cartItem['price'],
-                    
+                    'name' => $cartItem['name'],
+                     
                 ]);
             }
             $request->session()->forget('cart');
             return back()->withSuccess('Place Order SuccessFully');
-
         }
         public function orderDetail()
         {  
             $orders = Order::where('id', Auth::user()->id)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->simplePaginate(10); 
 
            $orderItems = OrderItem::where('user_id', Auth::user()->id)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->simplePaginate(10);
         
             return view('product.OrderList' , compact('orderItems','orders'));
         }
         public function OrderView($order_id){
-            
-            if(OrderItem::where('id',$order_id)->exist())
-            {
-                        return view('product.OrderView');
-            }
-            else{
-                 return redirect()->back()->with('No Order Found');
-            }
+            $order = Order::findOrFail($order_id);
+            $orderItems = OrderItem::where('order_id', $order_id,Auth::user()->user_id)->get();
+            return view('product.OrderView', ['order' => $order, 'orderItems' => $orderItems]);
         }
-        
+
     } 
 
