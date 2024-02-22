@@ -18,21 +18,20 @@ public function updateQuantity(Request $request)
 
     foreach ($cartItems as &$item) {
         if ($item['id'] == $productId) {
-            $item['quantity'] = max(1, $quantity); // Ensure quantity doesn't go below 1
+            $item['quantity'] = max(1, $quantity); 
             $found = true;
             break;
         }
     }
 
     if (!$found) {
-        // Product not in cart, add it
+        
         $cartItems[] = [
             'id' => $productId,
-            'quantity' => max(1, $quantity), // Ensure quantity doesn't go below 1
+            'quantity' => max(1, $quantity), 
             
         ];
     }
-
     session(['cart' => $cartItems]);
 }
 }

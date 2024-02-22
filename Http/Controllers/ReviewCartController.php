@@ -75,11 +75,11 @@ class ReviewCartController extends Controller
         {  
             $orders = Order::where('id', Auth::user()->id)
             ->orderBy('created_at', 'desc')
-            ->simplePaginate(10); 
+            ->Paginate(5); 
 
            $orderItems = OrderItem::where('user_id', Auth::user()->id)
             ->orderBy('created_at', 'desc')
-            ->simplePaginate(10);
+            ->Paginate(5);
         
             return view('product.OrderList' , compact('orderItems','orders'));
         }

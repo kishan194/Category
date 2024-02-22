@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 Use App\Models\Category;
 Use App\Models\Subcategory;
 
@@ -10,11 +11,22 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        // $categories = Category::all();
-        // return view('categories.index', compact('categories'));
         $categories = Category::all();
         $categoryTree = $this->CategoryTree($categories);
-        return view('categories/index', ['categories' => $categoryTree]);
+    
+        // Convert the array to a collection to enable pagination
+        $categoryCollection = collect($categoryTree);
+    
+        // Paginate the collection
+        $perPage = 5; // Number of categories per page
+        $currentPage = request()->query('page', 1); // Get the current page from the request query parameters
+        $pagedData = $categoryCollection->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $categories = new LengthAwarePaginator($pagedData, count($categoryCollection), $perPage, $currentPage, [
+            'path' => request()->url(), // URL path for pagination links
+            'query' => request()->query(), // Additional query parameters for pagination links
+        ]);
+    
+        return view('categories.index', compact('categories'));
     }
     public function CategoryTree($categories, $parentId = 0)
     {

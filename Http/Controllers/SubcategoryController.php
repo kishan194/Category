@@ -11,7 +11,7 @@ class SubcategoryController extends Controller
 {
     public function index()
     {
-        $subcategories = Subcategory::all();
+        $subcategories = Subcategory::paginate(5);
         return view('subcategories.index', compact('subcategories'));
     }
 
@@ -40,7 +40,7 @@ class SubcategoryController extends Controller
     }
     public function view($id){
          
-            $subcategory = DB::table('subcategories')->where('id',$id)->get();
+            $subcategory = DB::table('subcategories')->where('id',$id)->paginate(10);
              return view('subcategories/view',['subcategories'=>$subcategory]);
      
     }
